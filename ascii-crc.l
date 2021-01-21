@@ -2,6 +2,23 @@
 #!picolisp 21 only
 
 (load "@lib/simul.l")
+(de mmap (L F)
+   (native "@" "mmap" 'N 0 L 1 2 F 0) )
+(de munmap (A L)
+   (native "@" "munmap" 'N A L) )
+(de blake2b (M S)
+   (use R
+      (native
+         "libmonocypher.so"
+         "crypto_blake2b_general"
+         NIL
+         '(R (16 B . 16))
+         16
+         0
+         0
+         M
+         S )
+      R ) )
 (de planka ()
    (prin "+")
    (do 17
@@ -20,13 +37,18 @@
                (14 "\^") (15 "S") (16 "E") ) ) )
       (prinl "|") )
    (planka) )
-(let G (simul~grid 9 17)
+(let
+   (G (simul~grid 9 17)
+      F (car (argv))
+      S (car (info F))
+      M (mmap S (open F T)) )
+   (unless S (quit "not a file"))
    (for L G
       (for This L
          (=: N 0) ) )
    (with 'e8
       (=: N 15)
-      (for N (randL16)
+      (for N (blake2b M S)
          (do 4
             # XXX
             (let? M
@@ -44,5 +66,6 @@
                   (=: N (inc (: N))) ) )
             (setq N (>> 2 N)) ) )
       (=: N 16) )
-   (display) )
+   (display)
+   (munmap M S) )
 (bye)

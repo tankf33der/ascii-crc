@@ -9,17 +9,17 @@ Hash function is [blake2b](https://monocypher.org/manual/hash) from
 
 ### Example
 ```
-$ ascii-crc.l /bin/date
+$ ./ascii-crc.l /bin/date
 +-----------------+
-|                 |
-|                 |
-|          +      |
-|+    .   +       |
-|o . o . S +      |
-|.  + + . B .     |
-|o . + o B+o E    |
-| o .   + . o     |
-| +        .      |
+| ...ooo          |
+|E..o.+           |
+|+ o +            |
+| B +. .          |
+|  = .+.S         |
+|    o.o.         |
+|     + o.        |
+|    . ...        |
+|        ..       |
 +-----------------+
 ```
 
