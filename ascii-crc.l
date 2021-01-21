@@ -1,19 +1,7 @@
 #!/usr/bin/env pil
 #!picolisp 21 only
 
-# XXX
-(seed (in "/dev/urandom" (rd 8)))
-(de setrand (G)
-   (for L G
-      (for This L
-         (=: N (rand 0 16)) ) ) )
-# XXX
-
 (load "@lib/simul.l")
-(de grid0 ()
-   (for L G
-      (for This L
-         (=: N 0) ) ) )
 (de planka ()
    (prin "+")
    (do 17
@@ -32,38 +20,29 @@
                (14 "\^") (15 "S") (16 "E") ) ) )
       (prinl "|") )
    (planka) )
-
-#{
-(setq G (simul~grid 9 17))
-# (setrand G)
-(grid0 G)
-# (display G)
-(println (hex "fe") (bin (hex "fe")))
-(let N (hex "fe")
-   (do 4
-      (println (& N 3))
-      (setq N (>> 2 N))
-   )
-)
-}#
 (let G (simul~grid 9 17)
-   (grid0)
+   (for L G
+      (for This L
+         (=: N 0) ) )
    (with 'e8
       (=: N 15)
-      (let Input (list 55 228 106 45 72 56 26 10 243 114 109 217 23 107 189 94)
-         (for N Input
-            (do 4
-               (let A (& N 3)
-                  # move here
-                  # (println 'A A)
-               )
-               (setq N (>> 2 N))
-            )
-         )
-      )
-      # end
-      # (=: N 16)
-   )
-   (display)
-)
+      (for N (randL16)
+         (do 4
+            # XXX
+            (let? M
+               (case (& N 3)
+                  (0
+                     (or (simul~north (simul~west This)) (simul~north This) (simul~west This)) )
+                  (1
+                     (or (simul~north (simul~east This)) (simul~north This) (simul~east This)) )
+                  (2 
+                     (or (simul~south (simul~west This)) (simul~south This) (simul~west This)) )
+                  (3
+                     (or (simul~south (simul~east This)) (simul~south This) (simul~east This)) ) )
+               (setq This M)
+               (when (> 15 (: N))
+                  (=: N (inc (: N))) ) )
+            (setq N (>> 2 N)) ) )
+      (=: N 16) )
+   (display) )
 (bye)
