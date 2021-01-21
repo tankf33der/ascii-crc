@@ -10,7 +10,7 @@
 # XXX
 
 (load "@lib/simul.l")
-(de grid0 (G)
+(de grid0 ()
    (for L G
       (for This L
          (=: N 0) ) ) )
@@ -19,7 +19,7 @@
    (do 17
       (prin "-") )
    (prinl "+") )
-(de display (G)
+(de display ()
    (planka)
    (for L G
       (prin "|")
@@ -33,11 +33,11 @@
       (prinl "|") )
    (planka) )
 
+#{
 (setq G (simul~grid 9 17))
-(setrand G)
-# (grid0 G)
-(display G)
-
+# (setrand G)
+(grid0 G)
+# (display G)
 (println (hex "fe") (bin (hex "fe")))
 (let N (hex "fe")
    (do 4
@@ -45,5 +45,25 @@
       (setq N (>> 2 N))
    )
 )
-
+}#
+(let G (simul~grid 9 17)
+   (grid0)
+   (with 'e8
+      (=: N 15)
+      (let Input (list 55 228 106 45 72 56 26 10 243 114 109 217 23 107 189 94)
+         (for N Input
+            (do 4
+               (let A (& N 3)
+                  # move here
+                  # (println 'A A)
+               )
+               (setq N (>> 2 N))
+            )
+         )
+      )
+      # end
+      # (=: N 16)
+   )
+   (display)
+)
 (bye)
