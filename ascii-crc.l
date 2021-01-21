@@ -50,7 +50,6 @@
       (=: N 15)
       (for N (blake2b M S)
          (do 4
-            # XXX
             (let? M
                (case (& N 3)
                   (0
@@ -61,6 +60,7 @@
                      (or (simul~south (simul~west This)) (simul~south This) (simul~west This)) )
                   (3
                      (or (simul~south (simul~east This)) (simul~south This) (simul~east This)) ) )
+               # move
                (setq This M)
                (when (> 15 (: N))
                   (=: N (inc (: N))) ) )
