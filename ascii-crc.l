@@ -3,9 +3,9 @@
 
 (load "@lib/simul.l")
 (de mmap (L F)
-   (native "@" "mmap" 'N 0 L 1 2 F 0) )
+   (%@ "mmap" 'N 0 L 1 2 F 0) )
 (de munmap (A L)
-   (native "@" "munmap" 'N A L) )
+   (%@ "munmap" 'N A L) )
 (de blake2b (M S)
    (use R
       (native
