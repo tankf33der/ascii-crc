@@ -42,7 +42,7 @@
       F (car (argv))
       S (car (info F))
       M (mmap S (open F T)) )
-   (unless S (quit "not a file"))
+   (unless (num? S) (quit "not a file"))
    (for L G
       (for This L
          (=: N 0) ) )
